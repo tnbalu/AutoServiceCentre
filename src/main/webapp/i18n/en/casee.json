@@ -1,0 +1,25 @@
+{
+  "amsApp": {
+    "casee": {
+      "home": {
+        "title": "Casees",
+        "createLabel": "Create a new Casee",
+        "createOrEditLabel": "Create or edit a Casee",
+        "notFound": "No Casees found"
+      },
+      "created": "A new Casee is created with identifier {{ param }}",
+      "updated": "A Casee is updated with identifier {{ param }}",
+      "deleted": "A Casee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Casee {{ id }}?"
+      },
+      "detail": {
+        "title": "Casee"
+      },
+      "name": "Name",
+      "createdOn": "Created On",
+      "caseType": "Case Type",
+      "employee": "Employee"
+    }
+  }
+}

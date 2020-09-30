@@ -1,0 +1,71 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="amsApp.casee.home.title">Casees</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-casee" [routerLink]="['/casee/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="amsApp.casee.home.createLabel">
+            Create a new Casee
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="casees?.length === 0">
+        <span jhiTranslate="amsApp.casee.home.notFound">No casees found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="casees && casees.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="amsApp.casee.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdOn"><span jhiTranslate="amsApp.casee.createdOn">Created On</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="caseType"><span jhiTranslate="amsApp.casee.caseType">Case Type</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="employee.firstName"><span jhiTranslate="amsApp.casee.employee">Employee</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let casee of casees ;trackBy: trackId">
+                    <td><a [routerLink]="['/casee', casee.id, 'view']">{{ casee.id }}</a></td>
+                    <td>{{ casee.name }}</td>
+                    <td>{{ casee.createdOn | date:'mediumDate' }}</td>
+                    <td jhiTranslate="{{ 'amsApp.CaseType.' + casee.caseType }}">{{ casee.caseType }}</td>
+                    <td>
+                        <div *ngIf="casee.employee">
+                            <a [routerLink]="['/employee', casee.employee?.id, 'view']" >{{ casee.employee?.firstName }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/casee', casee.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/casee', casee.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(casee)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

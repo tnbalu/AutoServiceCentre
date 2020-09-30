@@ -1,0 +1,37 @@
+entity Car {
+	Name String
+	Company String
+    Modal String required
+    Make String
+    EnteredTime ZonedDateTime 
+	LeftTime ZonedDateTime
+}
+entity Contact {
+    FirstName String required
+	LastName String required
+	company String 
+}
+
+entity Employee{
+	FirstName String 
+	LastName String
+	Role String
+}
+entity Casee{
+	Name String
+	CreatedOn LocalDate
+	CaseType CaseType 
+}
+enum CaseType {
+    INQUIREY, START, WORK, HOLD, REJECT, CLOSE
+}
+
+relationship OneToOne {
+    Car{contact(FirstName)} to Contact  
+}
+relationship OneToMany {
+    Employee{casee(Name)} to Casee{employee(FirstName)}   
+	
+}
+paginate Contact, Car,Casee with infinite-scroll
+paginate  Employee with pagination

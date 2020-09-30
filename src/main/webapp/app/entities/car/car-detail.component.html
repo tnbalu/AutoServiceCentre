@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="car">
+            <h2><span jhiTranslate="amsApp.car.detail.title">Car</span> {{ car.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amsApp.car.name">Name</span></dt>
+                <dd>
+                    <span>{{ car.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.company">Company</span></dt>
+                <dd>
+                    <span>{{ car.company }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.modal">Modal</span></dt>
+                <dd>
+                    <span>{{ car.modal }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.make">Make</span></dt>
+                <dd>
+                    <span>{{ car.make }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.enteredTime">Entered Time</span></dt>
+                <dd>
+                    <span>{{ car.enteredTime }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.leftTime">Left Time</span></dt>
+                <dd>
+                    <span>{{ car.leftTime }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.car.contact">Contact</span></dt>
+                <dd>
+                    <div *ngIf="car.contact">
+                        <a [routerLink]="['/contact', car.contact?.id, 'view']">{{ car.contact?.firstName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/car', car.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

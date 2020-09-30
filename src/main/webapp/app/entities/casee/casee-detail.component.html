@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="casee">
+            <h2><span jhiTranslate="amsApp.casee.detail.title">Casee</span> {{ casee.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amsApp.casee.name">Name</span></dt>
+                <dd>
+                    <span>{{ casee.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.casee.createdOn">Created On</span></dt>
+                <dd>
+                    <span>{{ casee.createdOn }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.casee.caseType">Case Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'amsApp.CaseType.' + casee.caseType }}">{{ casee.caseType }}</span>
+                </dd>
+                <dt><span jhiTranslate="amsApp.casee.employee">Employee</span></dt>
+                <dd>
+                    <div *ngIf="casee.employee">
+                        <a [routerLink]="['/employee', casee.employee?.id, 'view']">{{ casee.employee?.firstName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/casee', casee.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

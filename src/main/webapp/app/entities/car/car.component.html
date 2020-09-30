@@ -1,0 +1,77 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="amsApp.car.home.title">Cars</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-car" [routerLink]="['/car/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="amsApp.car.home.createLabel">
+            Create a new Car
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="cars?.length === 0">
+        <span jhiTranslate="amsApp.car.home.notFound">No cars found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="cars && cars.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="amsApp.car.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="company"><span jhiTranslate="amsApp.car.company">Company</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="modal"><span jhiTranslate="amsApp.car.modal">Modal</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="make"><span jhiTranslate="amsApp.car.make">Make</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="enteredTime"><span jhiTranslate="amsApp.car.enteredTime">Entered Time</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="leftTime"><span jhiTranslate="amsApp.car.leftTime">Left Time</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contact.firstName"><span jhiTranslate="amsApp.car.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let car of cars ;trackBy: trackId">
+                    <td><a [routerLink]="['/car', car.id, 'view']">{{ car.id }}</a></td>
+                    <td>{{ car.name }}</td>
+                    <td>{{ car.company }}</td>
+                    <td>{{ car.modal }}</td>
+                    <td>{{ car.make }}</td>
+                    <td>{{ car.enteredTime | date:'medium' }}</td>
+                    <td>{{ car.leftTime | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="car.contact">
+                            <a [routerLink]="['/contact', car.contact?.id, 'view']" >{{ car.contact?.firstName }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/car', car.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/car', car.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(car)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
